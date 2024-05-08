@@ -14,33 +14,25 @@ const socketHandler = require("./socket.Controllers.js");
 const app=express();
 const server = createServer(app);
 
-app.use(cors({origin:process.env.URL_CLIENT,credentials:true}));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested, Content-Type, Accept Authorization"
+    )
+    if (req.method === "OPTIONS") {
+      res.header(
+        "Access-Control-Allow-Methods",
+        "POST, PUT, PATCH, GET, DELETE"
+      )
+      return res.status(200).json({})
+    }
+    next()
+  })
 //app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 const io = require('socket.io')(server);
 //const io = new Server(server,{cors:{origin: 'http://localhost:3000'}});
-const rooms = {};
-let playersInGame = [];
-let roomNumber = 1;
-
-function findNextAvailableIndex() {
-    const roomIDs = Object.keys(rooms).map(id => parseInt(id, 10));
-    let nextIndex = 0;
-    while (roomIDs.includes(nextIndex)) {
-        nextIndex++;
-    }
-    return nextIndex;
-}
-function findIndexById(id) {
-    for (const roomID in rooms) {
-        const room = rooms[roomID];
-        if (room.roomID === id) {
-            (roomID)
-            return roomID;
-        }
-    }
-    return null;
-}
 
 io.on('connection',(socket) => {
     socketHandler(io,socket);
