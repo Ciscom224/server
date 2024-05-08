@@ -2,7 +2,7 @@ const UserModel=require('../models/user.model');
 const jwt=require('jsonwebtoken');
 const { signUpErrors, signInErrors } = require('../utils/errors.utils');
 
-const maxDate =1 * 60 * 60 * 1000
+const maxDate =24 * 60 * 60 * 1000
 
 // fonction pour la creation du token 
 const createToken=(id)=>{
@@ -29,7 +29,7 @@ module.exports.signIn=async (req,res)=>{
     try {
         const user= await UserModel.login(email,password);
         const token=createToken(user._id);
-        res.cookie('jwt',token,{httpOnly:true,sameSite: 'None'}) // ajout du token JWT dans le cookie
+        res.cookie('jwt',token,{httpOnly:true,sameSite: 'None',secure:true}) // ajout du token JWT dans le cookie
         res.status(201).send(user)
     } catch (err) {
         const errors=signInErrors(err)
