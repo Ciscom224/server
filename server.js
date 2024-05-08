@@ -59,6 +59,6 @@ app.get('/jwtid',requireAuth,(req,res)=>{
 app.use('/api/user',userRoutes);
 app.use('/api/quiz',quizRoutes);
 // lancement du server
-server.listen(process.env.PORT,() => {
+server.listen(process.env.PORT || 5004,() => {
     console.log("Serveur actif ... "+process.env.PORT+" port")
 })
