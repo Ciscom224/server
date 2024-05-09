@@ -14,6 +14,7 @@ const socketHandler = require("./socket.Controllers.js");
 const app=express();
 const server = createServer(app);
 
+// AOUI
 app.use(cors({origin:[process.env.URL_CLIENT,process.env.URL_TEST],credentials:true}));
 //app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
