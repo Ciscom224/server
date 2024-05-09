@@ -15,10 +15,7 @@ const app=express();
 const server = createServer(app);
 
 app.use(cors({origin:process.env.URL_CLIENT,credentials:true}));
-//app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-
 const io = new Server(server,{cors:{origin:process.env.URL_CLIENT},credentials: true});
-//const io = new Server(server,{cors:{origin: 'http://localhost:3000'}});
 
 io.on('connection',(socket) => {
     socketHandler(io,socket);
