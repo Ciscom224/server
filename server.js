@@ -16,10 +16,8 @@ const server = createServer(app);
 
 // AOUI
 app.use(cors({origin:[process.env.URL_CLIENT,process.env.URL_TEST],credentials:true}));
-//app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 const io = new Server(server,{cors:{origin:[process.env.URL_CLIENT,process.env.URL_TEST]},credentials: true});
-//const io = new Server(server,{cors:{origin: 'http://localhost:3000'}});
 
 io.on('connection',(socket) => {
     socketHandler(io,socket);
@@ -27,8 +25,7 @@ io.on('connection',(socket) => {
 })
 
 app.use(bodyParser.json());
-// app.use(bodyParser.json({limit: '50mb'}));
-// app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser())
 
 // jwt 
