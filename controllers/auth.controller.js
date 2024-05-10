@@ -27,7 +27,7 @@ module.exports.signIn=async (req,res)=>{
     const {email,password}=req.body;
 
     try {
-        const user= await UserModel.login(email,password);
+        const user= await UserModel.login(email.trim(),password.trim());
         const token=createToken(user._id);
         res.cookie('jwt',token,{httpOnly:true,sameSite: 'None',secure:true,maxAge:maxDate}) // ajout du token JWT dans le cookie
         res.status(201).send(user)
