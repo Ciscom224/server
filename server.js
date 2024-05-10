@@ -23,6 +23,7 @@ io.on('connection',(socket) => {
 })
 
 app.use(bodyParser.json()) 
+app.use(bodyParser({limit: '5mb'}));
 app.use(cookieParser())
 
 // jwt 
