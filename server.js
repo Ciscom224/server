@@ -14,16 +14,21 @@ const socketHandler = require("./socket.Controllers.js");
 const app=express();
 const server = createServer(app);
 
-app.use(cors({origin:process.env.URL_CLIENT,credentials:true}));
-const io = new Server(server,{cors:{origin:process.env.URL_CLIENT},credentials: true});
+// AOUI
+app.use(cors({origin:[process.env.URL_CLIENT,process.env.URL_TEST],credentials:true}));
+//app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
+const io = new Server(server,{cors:{origin:[process.env.URL_CLIENT,process.env.URL_TEST]},credentials: true});
+//const io = new Server(server,{cors:{origin: 'http://localhost:3000'}});
 
 io.on('connection',(socket) => {
     socketHandler(io,socket);
     
 })
 
-app.use(bodyParser.json()) 
-app.use(bodyParser({limit: '5mb'}));
+app.use(bodyParser.json());
+// app.use(bodyParser.json({limit: '50mb'}));
+// app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser())
 
 // jwt 
