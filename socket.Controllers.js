@@ -54,7 +54,7 @@ function socketHandler(io,socket) {
                 const playerDetail = playersDetails[i];
                 const playerName = playerDetail[0];
                 if (playerName === username) {
-                    rooms[roomID].playersDetails[i][3] += points;
+                    rooms[roomID].playersDetails[i][3] = points;
                 }
         }}
     })
