@@ -14,8 +14,7 @@ const socketHandler = require("./socket.Controllers.js");
 const app=express();
 const server = createServer(app);
 
-// AOUII
-
+// AOUI
 app.use(cors({origin:[process.env.URL_CLIENT,process.env.URL_TEST],credentials:true}));
 //app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
@@ -27,8 +26,7 @@ io.on('connection',(socket) => {
     
 })
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json()) 
 app.use(cookieParser())
 
 // jwt 
