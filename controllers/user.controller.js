@@ -176,8 +176,7 @@ module.exports.updateScore = async (req, res) => {
         const currentScore = user.score.findIndex(score => score.categorieName === categorie);
 
         if (currentScore !== -1) {
-            
-            user.score[currentScore].level = level;
+            if (user.score[currentScore].level < level ) {user.score[currentScore].level = level;}
         } else {
             user.score.push({ categorieName: categorie, level: level });
         }
