@@ -17,6 +17,9 @@ const server = createServer(app);
 // AOUI
 app.use(cors({origin:[process.env.URL_CLIENT,process.env.URL_TEST],credentials:true}));
 
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
+
 const io = new Server(server,{cors:{origin:[process.env.URL_CLIENT,process.env.URL_TEST]},methods: ["GET", "POST"],credentials: true});
 
 io.on('connection',(socket) => {
@@ -24,8 +27,7 @@ io.on('connection',(socket) => {
     
 })
 
-app.use(bodyParser.json({ limit: '5mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
+
 // app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser())
 
