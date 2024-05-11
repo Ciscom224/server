@@ -24,8 +24,8 @@ io.on('connection',(socket) => {
     
 })
 
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
 // app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser())
 
