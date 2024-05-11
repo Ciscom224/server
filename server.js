@@ -17,7 +17,7 @@ const server = createServer(app);
 // AOUI
 app.use(cors({origin:[process.env.URL_CLIENT,process.env.URL_TEST],credentials:true}));
 
-const io = new Server(server,{cors:{origin:[process.env.URL_CLIENT,process.env.URL_TEST]},credentials: true});
+const io = new Server(server,{cors:{origin:[process.env.URL_CLIENT,process.env.URL_TEST]},methods: ["GET", "POST"],credentials: true});
 
 io.on('connection',(socket) => {
     socketHandler(io,socket);
