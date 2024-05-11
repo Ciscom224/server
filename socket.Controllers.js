@@ -54,7 +54,7 @@ function socketHandler(io,socket) {
                 const playerDetail = playersDetails[i];
                 const playerName = playerDetail[0];
                 if (playerName === username) {
-                    rooms[roomID].playersDetails[i][3] = points;
+                    rooms[roomID].playersDetails[i][2] = points;
                 }
         }}
     })
@@ -97,7 +97,7 @@ function socketHandler(io,socket) {
         } else {callback(null)}
     })
 
-    socket.on('join_room',(id,username,photo,room_ID,callback) => {
+    socket.on('join_room',(id,username,room_ID,callback) => {
         const roomID = parseInt(room_ID,10)
         if (playersInGame.includes(id) && !rooms[roomID].players.includes(id))
             {
@@ -113,7 +113,7 @@ function socketHandler(io,socket) {
                     
                     rooms[roomID].players.push(id)
                     playersInGame.push(id)
-                    rooms[roomID].playersDetails.push([username,photo,"border-transparent",0])
+                    rooms[roomID].playersDetails.push([username,"border-transparent",0])
                     rooms[roomID].playersSubmit.push(false)
                     rooms[roomID].playersReady.push(false)
                     socket.join(rooms[roomID].roomID);
@@ -184,7 +184,7 @@ function socketHandler(io,socket) {
                 const playerDetail = playersDetails[i];
                 const playerName = playerDetail[0];
                 if (playerName === username) {
-                    rooms[index].playersDetails[i][2] = color;
+                    rooms[index].playersDetails[i][1] = color;
                     if (color === "border-[#ADA3A1]") {
                         rooms[index].playersSubmit[i] = true;
                         console.log("submit de  "+ username)
@@ -210,7 +210,7 @@ function socketHandler(io,socket) {
     
     
     });
-    socket.on('create_room',(id,username,photo,themeSelect,theme,questions,choices,answers,callback) => {
+    socket.on('create_room',(id,username,themeSelect,theme,questions,choices,answers,callback) => {
         const ingame = playersInGame.includes(id)
         console.log(ingame)
         if (!ingame){
@@ -220,7 +220,7 @@ function socketHandler(io,socket) {
             rooms[newRoom] = {
                 roomID:roomNumber,
                 players:[id],
-                playersDetails:[[username,photo,"border-transparent",0]],
+                playersDetails:[[username,"border-transparent",0]],
                 playersSubmit:[false],
                 playersReady:[false],
                 started:false,
@@ -232,7 +232,6 @@ function socketHandler(io,socket) {
                 answers:answers
             }
             playersInGame.push(id)
-            console.log(playersInGame)
             io.emit('lobby_changed');
             roomNumber += 1;
             callback(rooms[newRoom].roomID);
