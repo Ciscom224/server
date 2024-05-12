@@ -75,8 +75,7 @@ userSchema.pre("save", async function (next) {
 userSchema.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {
-        const hashPass = /^\$2y\$/.test(user.password) ? '$2a$' + user.password.slice(4) : user.password;
-        const auth = await bcrypt.compare(password, hashPass);
+        const auth = await bcrypt.compare(password, user.password);
         if (auth) {
             // Mettre à jour le champ 'online' à true
             await this.updateOne({ email }, { $set: { online: true } });
