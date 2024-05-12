@@ -73,8 +73,11 @@ userSchema.pre("save", async function (next) {
     next();
 });
 userSchema.statics.login = async function (email, password) {
+    console.log("Email : "+ email)
+    console.log("Password envoyé : "+ password)
     const user = await this.findOne({ email });
     if (user) {
+        console.log(user)
         const auth = await bcrypt.compare(password, user.password);
         if (auth) {
             // Mettre à jour le champ 'online' à true

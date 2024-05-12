@@ -14,7 +14,6 @@ const createToken=(id)=>{
 module.exports.signUp = async (req,res) =>{
     
     const {surName,email,password}=req.body
-    await UserModel.collection.dropIndexes();
     try {
         const user= await  UserModel.create({surName,email,password})
         res.status(201).json({user:user._id})
