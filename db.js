@@ -1,7 +1,7 @@
 const mongoose =require("mongoose")
 
 mongoose.connect(
-    "mongodb+srv://"+process.env.DB_USER_PASSWORD+"@aws.lelmj2i.mongodb.net/db_aws",
+    "mongodb+srv://"+process.env.DB_USER_PASSWORD+"@aws.iyfrll2.mongodb.net/",
 
 ).then(()=>{
     console.log("BD MongDB connectee ...")
