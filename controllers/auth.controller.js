@@ -38,7 +38,7 @@ module.exports.signIn=async (req,res)=>{
             await UserModel.updateOne({ email }, { $set: { online: true } });
             const token = createToken(user._id);
             res.cookie('jwt', token, { httpOnly: true, sameSite: 'None', secure: true, maxAge: maxDate });
-            res.status(201).send(user);
+            return res.status(201).send(user);
             
         } else {
             throw new Error("password error");
@@ -48,7 +48,7 @@ module.exports.signIn=async (req,res)=>{
 
     } catch (err) {
         const errors = signInErrors(err);
-        res.status(200).send(errors);
+        return res.status(200).send(errors);
     }
 
 }
