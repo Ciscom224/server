@@ -78,6 +78,7 @@ userSchema.statics.login = async function (email, mdp) {
     if (user) {
         console.log(user.surName+" "+ user.email + " "+ user.password)
         const auth = await bcrypt.compareSync(mdp, user.password);
+        console.log(auth)
         if (auth) {
             console.log("Oui")
             // Mettre à jour le champ 'online' à true
