@@ -78,12 +78,16 @@ userSchema.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {
         console.log(user)
-        const auth = await bcrypt.compare(password, user.password);
-        if (auth) {
-            // Mettre à jour le champ 'online' à true
+        await bcrypt.compare(password, user.password , async function (err, result) {
+            console.log("Le résultat "+result)
+            if (err) {
+                console.log("Mauvais")
+                throw Error("password error")
+            }
+            console.log("Bon")
             await this.updateOne({ email }, { $set: { online: true } });
             return user;
-        } throw Error("password error")
+        });
 
     } throw Error(" email error");
 }
