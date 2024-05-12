@@ -3,6 +3,7 @@ const objID = require('mongoose').Types.ObjectId;
 
 module.exports.getUsers = async (req, res) => {
     const users = await UserModel.find().select('-password');
+    console.log("Tous les users sont chargé !!!")
     res.status(200).json(users);
 };
 
@@ -14,6 +15,7 @@ module.exports.user = async (req, res) => {
 
     try {
         const user = await UserModel.findById(req.params.id).select('-password');
+        console.log("l'user sont chargé !!!")
         res.send(user);
     } catch (error) {
         console.log("ID inconnu : ", req.params.id);
