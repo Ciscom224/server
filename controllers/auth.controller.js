@@ -33,17 +33,19 @@ module.exports.signIn=async (req,res)=>{
             throw new Error("email error");
         }
 
-        const auth = await bcrypt.compare(password, user.password);
-        if (!auth) {
+        const isPassword = await bcrypt.compare(password, user.password);
+        if (isPassword) {
+            await UserModel.updateOne({ email }, { $set: { online: true } });
+            const token = createToken(user._id);
+            res.cookie('jwt', token, { httpOnly: true, sameSite: 'None', secure: true, maxAge: maxDate });
+            res.status(201).send(user);
+            
+        } else {
             throw new Error("password error");
         }
 
         // Mettre à jour le champ 'online' à true
-        await UserModel.updateOne({ email }, { $set: { online: true } });
 
-        const token = createToken(user._id);
-        res.cookie('jwt', token, { httpOnly: true, sameSite: 'None', secure: true, maxAge: maxDate });
-        res.status(201).send(user);
     } catch (err) {
         const errors = signInErrors(err);
         res.status(200).send(errors);
