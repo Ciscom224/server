@@ -32,7 +32,6 @@ function socketHandler(io,socket) {
          
             callback(null)
         }
-        
 
     })
 

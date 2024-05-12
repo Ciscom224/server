@@ -80,9 +80,13 @@ userSchema.statics.login = async function (email, password) {
             // Mettre à jour le champ 'online' à true
             await this.updateOne({ email }, { $set: { online: true } });
             return user;
-        } throw Error("password error")
+        } else {
+            throw new Error("password error");
+        }
 
-    } throw Error(" email error");
+    } else {
+        throw new Error("email error");
+    }
 }
 const UserModel = mongoose.model('User', userSchema);
 
