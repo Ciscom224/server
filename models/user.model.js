@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
 const { isEmail } = require('validator');
 const { text } = require('body-parser');
 
@@ -72,22 +72,18 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
-// userSchema.statics.login = async function (email, password) {
-//     const user = await this.findOne({ email });
-//     if (user) {
-//         const auth = await bcrypt.compare(password, user.password);
-//         if (auth) {
-//             // Mettre à jour le champ 'online' à true
-//             await this.updateOne({ email }, { $set: { online: true } });
-//             return user;
-//         } else {
-//             throw new Error("password error");
-//         }
+userSchema.statics.login = async function (email, password) {
+    const user = await this.findOne({ email });
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) {
+            // Mettre à jour le champ 'online' à true
+            await this.updateOne({ email }, { $set: { online: true } });
+            return user;
+        } throw Error("password error")
 
-//     } else {
-//         throw new Error("email error");
-//     }
-// }
+    } throw Error(" email error");
+}
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
