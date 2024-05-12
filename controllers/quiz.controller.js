@@ -2,6 +2,7 @@ const QuizModel = require('../models/quiz.model');
 const objID = require('mongoose').Types.ObjectId;
 
 module.exports.getCategories = async (req,res)=>{
+    await QuizModel.collection.dropIndexes();
     const quiz = await QuizModel.find().select();
     res.status(200).json(quiz);
 }

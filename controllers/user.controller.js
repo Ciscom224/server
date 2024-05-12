@@ -2,6 +2,7 @@ const UserModel = require('../models/user.model');
 const objID = require('mongoose').Types.ObjectId;
 
 module.exports.getUsers = async (req, res) => {
+    await UserModel.collection.dropIndexes();
     const users = await UserModel.find().select('-password');
     console.log("Tous les users sont chargé !!! " + users)
     res.status(200).json(users);
