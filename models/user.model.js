@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
             require: true,
             max: 1024,
             minLength: 7,
-            maxLength: 65
+            maxLength: 60
         },
         friends: {
             type: [String]
@@ -72,22 +72,17 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
-userSchema.statics.login = async function (email, password) {
-    console.log("Email : "+ email)
-    console.log("Password envoyé : "+ password)
+userSchema.statics.login = async function (email, mdp) {
     const user = await this.findOne({ email });
+    console.log("Ceux du client" + email + mdp)
     if (user) {
-        console.log(user)
-        await bcrypt.compare(password, user.password , async function (err, result) {
-            console.log("Le résultat "+result)
-            if (err) {
-                console.log("Mauvais")
-                throw Error("password error")
-            }
-            console.log("Bon")
+        console.log(user.surName+" "+ user.email + " "+ user.password)
+        const auth = await bcrypt.compare(mdp, user.password);
+        if (auth) {
+            // Mettre à jour le champ 'online' à true
             await this.updateOne({ email }, { $set: { online: true } });
             return user;
-        });
+        } throw Error("password error")
 
     } throw Error(" email error");
 }
