@@ -17,10 +17,8 @@ module.exports.signUp = async (req,res) =>{
     const {surName,email,password}=req.body
     try {
         // const user= await  UserModel.create({surName,email,password})
-        console.log(password)
         const salt=await bcrypt.genSalt();
         const passwordHash= await bcrypt.hash(password, salt);
-        console.log(passwordHash)
         const newUser = new UserModel({surName,password:passwordHash,email});
         await newUser.save();
         res.status(201).json({user:newUser._id})
