@@ -40,6 +40,6 @@ module.exports.signIn=async (req,res)=>{
 module.exports.logout= async (req,res)=>{
 
    await UserModel.updateOne({ _id: res.locals.user._id }, { $set: { online: false } });
-   res.cookie('jwt',"",{httpOnly:true,sameSite: 'None',secure:true,maxAge:1})
+   await res.cookie('jwt',"",{httpOnly:true,sameSite: 'None',secure:true,maxAge:1})
    res.status(201).send({message:"vous vous etes deconnecter"})
 }
