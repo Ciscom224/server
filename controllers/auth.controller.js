@@ -17,7 +17,7 @@ module.exports.signUp = async (req,res) =>{
     console.log("Le password de connection"+password)
     try {
         const realPassword = await password.trim();
-        const user= await  UserModel.create({surName,email,realPassword})
+        const user= await  UserModel.create({surName,email,password:realPassword})
         console.log("Bon")
         res.status(201).json({user:user._id})
     } catch (error) {
