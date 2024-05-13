@@ -14,16 +14,11 @@ const createToken=(id)=>{
 module.exports.signUp = async (req,res) =>{
     
     const {surName,email,password}=req.body
-    console.log("Le password de connection"+password)
-    await UserModel.collection.dropIndexes();
     try {
-        const realPassword = await password.trim();
-        const user= await  UserModel.create({surName,email,password:realPassword})
-        console.log("Bon")
+        const user= await  UserModel.create({surName,email,password})
         res.status(201).json({user:user._id})
     } catch (error) {
         const errors=signUpErrors(error)
-        console.log("Mauvais")
         res.status(200).send({errors});  
     }
 }

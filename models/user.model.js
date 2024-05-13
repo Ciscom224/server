@@ -28,7 +28,9 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             require: true,
-            
+            max: 1024,
+            minLength: 7,
+            maxLength: 65
         },
         friends: {
             type: [String]
@@ -70,15 +72,11 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
-userSchema.statics.login = async function (email, mdp) {
+userSchema.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
-    console.log("Ceux du client" + email + mdp)
     if (user) {
-        console.log(user.surName+" "+ user.email + " "+ user.password)
-        const auth = await bcrypt.compare(mdp, user.password);
-        console.log(auth)
+        const auth = await bcrypt.compare(password, user.password);
         if (auth) {
-            console.log("Oui")
             // Mettre à jour le champ 'online' à true
             await this.updateOne({ email }, { $set: { online: true } });
             return user;
