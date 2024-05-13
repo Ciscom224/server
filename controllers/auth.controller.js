@@ -14,9 +14,10 @@ const createToken=(id)=>{
 module.exports.signUp = async (req,res) =>{
     
     const {surName,email,password}=req.body
-    console.log("Le password de connection" + password)
+    console.log("Le password de connection"+password)
     try {
-        const user= await  UserModel.create({surName,email,password})
+        const realPassword = password.trim();
+        const user= await  UserModel.create({surName,email,realPassword})
         res.status(201).json({user:user._id})
     } catch (error) {
         const errors=signUpErrors(error)
