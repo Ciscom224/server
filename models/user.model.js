@@ -28,9 +28,7 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             require: true,
-            max: 1024,
-            minLength: 7,
-            maxLength: 150
+            
         },
         friends: {
             type: [String]
