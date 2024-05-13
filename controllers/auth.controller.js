@@ -1,5 +1,6 @@
 const UserModel=require('../models/user.model');
 const jwt=require('jsonwebtoken');
+const bcrypt = require("bcrypt")
 const { signUpErrors, signInErrors } = require('../utils/errors.utils');
 
 const maxDate =24 * 60 * 60 * 1000
@@ -16,11 +17,13 @@ module.exports.signUp = async (req,res) =>{
     const {surName,email,password}=req.body
     try {
         // const user= await  UserModel.create({surName,email,password})
+        console.log(password)
         const salt=await bcrypt.genSalt();
         const passwordHash= await bcrypt.hash(password, salt);
-        const newUser = new UserModel({userMail,password:passwordHash,userRole});
+        console.log(passwordHash)
+        const newUser = new UserModel({surName,password:passwordHash,email});
         await newUser.save();
-        res.status(201).json({user:user._id})
+        res.status(201).json({user:newUser._id})
     } catch (error) {
         const errors=signUpErrors(error)
         res.status(200).send({errors});  
