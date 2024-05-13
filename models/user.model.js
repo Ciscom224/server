@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
             require: true,
             max: 1024,
             minLength: 7,
-            maxLength: 60
+            maxLength: 150
         },
         friends: {
             type: [String]
@@ -77,7 +77,7 @@ userSchema.statics.login = async function (email, mdp) {
     console.log("Ceux du client" + email + mdp)
     if (user) {
         console.log(user.surName+" "+ user.email + " "+ user.password)
-        const auth = await bcrypt.compareSync(mdp, user.password);
+        const auth = await bcrypt.compare(mdp, user.password);
         console.log(auth)
         if (auth) {
             console.log("Oui")
